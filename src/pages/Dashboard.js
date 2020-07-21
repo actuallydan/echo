@@ -9,6 +9,7 @@ export default function Dashboard(props) {
   const [shieldRemaining, setShieldRemaining] = useGlobal("shieldRemaining");
   const [healthRemaining, setHealthRemaining] = useGlobal("healthRemaining");
 
+  console.log(sp, hp);
   const regen = (shouldRegenShield) => {
     shouldRegenShield ? setShieldRemaining(sp) : setHealthRemaining(hp);
   };

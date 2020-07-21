@@ -64,7 +64,7 @@ export default function HealDamage(props) {
   const inputStyles = { marginLeft: "1em", marginRight: "1em" };
   return (
     <div className="row center">
-      <Button onClick={doDamage} label={"-"} color={"#FF0000"} />
+      <Button onClick={doDamage} label={"-"} color={"#F44336"} />
       <Input value={amount} onChange={updateAmount} style={inputStyles} />
       <Button onClick={addHealth} label={"+"} color={"#09ff9b"} />
     </div>

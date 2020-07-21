@@ -7,10 +7,12 @@ export default function Button({ label = "Button", onClick, color, ...props }) {
   const styles = {
     border: "2px solid " + btnColor,
     color: btnColor,
+    boxShadow: "inset 0px 0px 0.1em " + btnColor,
+    filter: `drop-shadow(0px 0px 0.5em ${btnColor})`,
   };
 
   return (
-    <div onClick={onClick} className="button" style={styles}>
+    <div {...props} onClick={onClick} className="button" style={styles}>
       {label}
     </div>
   );

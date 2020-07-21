@@ -9,10 +9,12 @@ export default function Input({
 }) {
   const [theme] = useGlobal("theme");
 
-  const btnColor = color || theme || "#00DFFE";
+  const inputColor = color || theme || "#00DFFE";
   const styles = {
-    border: "2px solid " + btnColor,
-    color: btnColor,
+    border: "2px solid " + inputColor,
+    color: inputColor,
+    boxShadow: "inset 0px 0px 1em " + inputColor,
+    filter: `drop-shadow(0px 0px 0.2em ${inputColor}20)`,
     ...style,
   };
 

@@ -2,6 +2,7 @@ import React, { useState, useGlobal } from "reactn";
 import Button from "../components/Button";
 
 import { generateGun, calculateDamage } from "../utils/generate";
+import GunDisplay from "../components/GunDisplay";
 
 export default function Dashboard(props) {
   const [gun, setGun] = useState(null);
@@ -34,6 +35,7 @@ export default function Dashboard(props) {
 
     setAvgDmg(newAvg);
   };
+  console.log(gun);
   return (
     <>
       <p>Select a rarity:</p>
@@ -56,6 +58,8 @@ export default function Dashboard(props) {
 
       {gun && (
         <div style={{ display: "flex", flexDirection: "column" }}>
+          <GunDisplay gun={gun} />
+
           <div>{"Brand : " + gun.brand}</div>
           <div>{"Type:   " + gun.type}</div>
           <div>{"Range:  " + gun.range + "ft"}</div>

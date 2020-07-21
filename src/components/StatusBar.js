@@ -6,9 +6,17 @@ export default function StatusBar({
   remaining = 10,
   ...props
 }) {
+  const color = blue ? "#00dffc" : "#F44336";
+
   const styles = {
     width: ((remaining / total) * 100).toFixed(2) + "%",
-    background: blue ? "#00dffc" : "#FF0000",
+    background: color,
+  };
+
+  const fieldsetStyles = {
+    borderColor: blue ? "#00dffc" : "#F44336",
+    boxShadow: "inset 0px 0px 1em " + color,
+    filter: `drop-shadow(0px 0px ${(remaining / total) * 0.5 + "em"} ${color})`,
   };
 
   const regen = () => {
@@ -17,8 +25,12 @@ export default function StatusBar({
 
   return (
     <div>
-      <fieldset onClick={regen}>
-        <legend>{remaining}</legend>
+      <fieldset
+        className="statusBarFieldSet"
+        onClick={regen}
+        style={fieldsetStyles}
+      >
+        <legend className="legend textBorder">{remaining}</legend>
         <div className="statusBarInner" style={styles}></div>
       </fieldset>
     </div>
