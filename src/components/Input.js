@@ -23,6 +23,7 @@ export default function Input({
       onChange={onChange}
       style={styles}
       value={value}
+      {...props}
     />
   );
 }

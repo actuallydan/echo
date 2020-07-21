@@ -47,6 +47,9 @@ code {
   font-size: 16px;
 }
 
+.section {
+  margin-bottom: 1em;
+}
 /* Some flex stuff */
 
 .row {
@@ -58,6 +61,17 @@ code {
 }
 .center {
   justify-content: center;
+}
+.around {
+  justify-content: space-around;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+.column.center {
+  align-items: center;
 }
 .textBorder {
   text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000,
