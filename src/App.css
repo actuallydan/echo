@@ -1,38 +1,112 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 .App {
-  text-align: center;
+  margin: 1em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.button {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: fit-content;
+  padding: 0.5em;
+  border-radius: 4px;
+  margin: 0.5em 0px;
+  font-weight: bold;
+  text-transform: uppercase;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  min-width: 1em;
 }
 
-.App-link {
-  color: #61dafb;
+.statusBarInner {
+  height: 1em;
+  transition: width 0.25s linear;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.input {
+  display: flex;
+  width: 2em;
+  padding: 0.5em;
+  border-radius: 4px;
+  margin: 0.5em 0px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+/* Some flex stuff */
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.between {
+  justify-content: space-between;
+}
+.center {
+  justify-content: center;
+}
+.textBorder {
+  text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000,
+    -1px -1px 0 #000, 0px 1px 0 #000, 0px -1px 0 #000, -1px 0px 0 #000,
+    1px 0px 0 #000, 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000,
+    -2px -2px 0 #000, 0px 2px 0 #000, 0px -2px 0 #000, -2px 0px 0 #000,
+    2px 0px 0 #000, 1px 2px 0 #000, -1px 2px 0 #000, 1px -2px 0 #000,
+    -1px -2px 0 #000, 2px 1px 0 #000, -2px 1px 0 #000, 2px -1px 0 #000,
+    -2px -1px 0 #000;
+}
+
+/* Animations */
+@keyframes popOff {
+  0% {
+    transform: translateX(1em) translateY(-1em);
+    font-size: 1em;
   }
-  to {
-    transform: rotate(360deg);
+  10% {
+    transform: translateX(1em) translateY(-1em);
+    font-size: 2em;
+    color: #ffe500;
   }
+  20% {
+    transform: translateX(2em) translateY(-1.5em);
+    font-size: 4em;
+    text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000,
+      -1px -1px 0 #000, 0px 1px 0 #000, 0px -1px 0 #000, -1px 0px 0 #000,
+      1px 0px 0 #000, 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000,
+      -2px -2px 0 #000, 0px 2px 0 #000, 0px -2px 0 #000, -2px 0px 0 #000,
+      2px 0px 0 #000, 1px 2px 0 #000, -1px 2px 0 #000, 1px -2px 0 #000,
+      -1px -2px 0 #000, 2px 1px 0 #000, -2px 1px 0 #000, 2px -1px 0 #000,
+      -2px -1px 0 #000;
+    color: #ffe500;
+  }
+  30% {
+    transform: translateX(3em) translateY(-1em);
+    font-size: 2em;
+    color: #ffe500;
+  }
+  60% {
+    transform: translateX(4em) translateY(50vh);
+    font-size: 1.25em;
+  }
+  100% {
+    transform: translateX(4.5em) translateY(100vh);
+    font-size: 1em;
+  }
+}
+
+.popOff {
+  animation: popOff 1s 1 0s ease-out;
 }
