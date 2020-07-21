@@ -1,6 +1,7 @@
 {
   "name": "gun-smith",
   "version": "0.1.0",
+  "homepage": "https://actuallydan.github.io/echo",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
