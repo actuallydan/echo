@@ -4,7 +4,7 @@ export default function Fieldset({ children, label }) {
   const [theme] = useGlobal("theme");
 
   const fieldSetStyles = {
-    border: `1px solid ${theme}`,
+    border: `2px solid ${theme}`,
     padding: "1em",
     marginBottom: "2em",
   };

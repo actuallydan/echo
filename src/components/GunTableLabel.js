@@ -1,6 +1,6 @@
 import React, { useGlobal } from "reactn";
 
-export default function GunTableLabel() {
+export default function GunTableLabel({ hideDamage = false }) {
   const [theme] = useGlobal("theme");
 
   const labelStyles = {
@@ -22,9 +22,11 @@ export default function GunTableLabel() {
       <div className="column">
         <div style={labelStyles}>Damage</div>
       </div>
-      <div className="column">
-        <div style={labelStyles}>Last Roll</div>
-      </div>
+      {!hideDamage && (
+        <div className="column">
+          <div style={labelStyles}>Last Roll</div>
+        </div>
+      )}
     </div>
   );
 }

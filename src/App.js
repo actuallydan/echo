@@ -27,15 +27,6 @@ function App() {
     }
 
     setHasLoaded(true);
-
-    const backuper = setInterval(() => {
-      const backup = JSON.stringify(globalState);
-      localStorage.setItem("BL_Backup", backup);
-    }, 20000);
-
-    return () => {
-      clearTimeout(backuper);
-    };
   }, []);
 
   return (

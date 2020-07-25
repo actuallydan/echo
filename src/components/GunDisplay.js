@@ -4,11 +4,14 @@ import { calculateDamage } from "../utils/generate";
 
 export default function GunDisplay({
   gun: { type, brand, range, damage, rarity, element, bonusDamage },
+  hideDamage = false,
   ...props
 }) {
   // const [theme, setTheme] = useGlobal("theme");
   const [damageInst, setDamageInst] = useState(null);
   const [fire, setFire] = useState(0);
+
+  console.log({ type, brand, range, damage, rarity, element, bonusDamage });
 
   const bang = () => {
     const getDamage = calculateDamage({
@@ -72,16 +75,18 @@ export default function GunDisplay({
             color={color}
             style={{ margin: 0 }}
           />
-          {element && <div style={elementStyles}>{bonusDamage}</div>}
+          {element && <div style={elementStyles}>+{bonusDamage}</div>}
         </div>
       </div>
-      <div className="column">
-        {damageInst && (
-          <div key={fire} className={"popOff"} style={labelStyles}>
-            {damageInst}
-          </div>
-        )}
-      </div>
+      {!hideDamage && (
+        <div className="column">
+          {damageInst && (
+            <div key={fire} className={"popOff"} style={labelStyles}>
+              {damageInst}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useGlobal } from "reactn";
+import React, { useGlobal, useEffect } from "reactn";
 import StatusBar from "../components/StatusBar";
 import HealDamage from "../components/HealDamage";
 
@@ -14,6 +14,8 @@ export default function Dashboard(props) {
   const [shieldRemaining, setShieldRemaining] = useGlobal("shieldRemaining");
   const [healthRemaining, setHealthRemaining] = useGlobal("healthRemaining");
 
+  const [global] = useGlobal();
+
   const regen = (shouldRegenShield) => {
     shouldRegenShield ? setShieldRemaining(sp) : setHealthRemaining(hp);
   };
@@ -26,6 +28,11 @@ export default function Dashboard(props) {
   const legendStyles = {
     color: theme,
   };
+
+  useEffect(() => {
+    const backup = JSON.stringify(global);
+    localStorage.setItem("BL_Backup", backup);
+  }, [shieldRemaining, healthRemaining]);
 
   return (
     <div id="dashboard">

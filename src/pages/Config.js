@@ -4,6 +4,11 @@ import Button from "../components/Button";
 import { useHistory } from "react-router-dom";
 import { defaultState } from "../utils/data";
 
+import Fieldset from "../components/Fieldset";
+import GunTableLabel from "../components/GunTableLabel";
+import GunDisplay from "../components/GunDisplay";
+import GunSmith from "../components/GunSmith";
+
 export default function Config(props) {
   const [state, setState] = useState({
     hp: 20,
@@ -22,7 +27,7 @@ export default function Config(props) {
     //   if local data exists hydrate our store with it
     if (localStorage && localStorage.getItem("BL_Backup")) {
       const backup = JSON.parse(localStorage.getItem("BL_Backup"));
-      setState({
+      setGlobal({
         ...backup,
       });
     }
@@ -30,8 +35,11 @@ export default function Config(props) {
 
   const updateGlobalStatus = () => {
     setGlobal({
+      ...global,
       hp: state.hp,
       sp: state.sp,
+      healthRemaining: state.hp,
+      shieldRemaining: state.sp,
     });
 
     setHasBeenUpdated(true);
@@ -39,7 +47,6 @@ export default function Config(props) {
 
   // after updating hp and sp, update backup
   useEffect(() => {
-    console.log(global);
     const backup = JSON.stringify(global);
     localStorage.setItem("BL_Backup", backup);
   }, [hp, sp]);
@@ -73,6 +80,8 @@ export default function Config(props) {
     localStorage.removeItem("BL_Backup");
   };
 
+  const guns = global.guns;
+
   return (
     <div>
       <div className="section row between">
@@ -85,13 +94,11 @@ export default function Config(props) {
           <div style={labeStyles}>Shield Power</div>
         </div>
       </div>
-      <div className="section">
-        <div style={labeStyles}>Color Theme</div>
+      <Fieldset label={"Color Theme"}>
         <input
           className="input color-picker"
           type="color"
           onChange={updateTheme}
-          defaultValue={theme}
           value={theme}
           style={{
             boxShadow: "inset 0px 0px 0.1em " + theme,
@@ -99,7 +106,14 @@ export default function Config(props) {
             border: `3px solid ${theme}`,
           }}
         />
-      </div>
+      </Fieldset>
+      <Fieldset label={"Manage Guns"}>
+        <GunSmith />
+        <GunTableLabel hideDamage />
+        {guns &&
+          guns.map((gun) => <GunDisplay hideDamage id={gun.id} gun={gun} />)}
+      </Fieldset>
+
       <div className="section">
         <Button label={"save"} onClick={updateGlobalStatus} />
       </div>

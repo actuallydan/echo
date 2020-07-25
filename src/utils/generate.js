@@ -32,7 +32,9 @@ export function generateGun(
     return (Math.random() * (n + 1) + (n - 1)) | 0;
   };
 
-  let gun = classType || classes[Math.floor(Math.random() * 6)];
+  let gun =
+    classes.find((c) => c.type === classType) ||
+    classes[Math.floor(Math.random() * 6)];
 
   // brand
   gun.brand = brand || brands[Math.floor(Math.random() * 7)];
@@ -59,10 +61,13 @@ export function generateGun(
   // number of bonus damage dice
   if (gun.bonusDamage) {
     gun.bonusDamage = uniformSample(rarity + 1) + gun.bonusDamage;
-    gun.element =
-      gun.element !== "Torgue"
-        ? elements[Math.floor(Math.random() * 5)]
-        : "force";
+
+    // if element provided, use element
+    gun.element = element
+      ? element
+      : gun.element !== "Torgue"
+      ? elements[Math.floor(Math.random() * 7)]
+      : "force";
   }
 
   return gun;
@@ -70,21 +75,17 @@ export function generateGun(
 
 export function calculateDamage(gun) {
   const roll = (d) => Math.floor(Math.random() * d) + 1;
-  console.log({ gun });
   let dmg = 0;
   const [quantity, d] = gun.damage.split("d");
 
   for (let i = 0; i < quantity; i++) {
     dmg += roll(d);
   }
-  console.log("damage before bonus", dmg);
   if (gun.bonusDamage) {
     const [quantity2, d2] = gun.bonusDamage.split("d");
-    console.log("adding bonus die");
     for (let i = 0; i < quantity2; i++) {
       dmg += roll(d2);
     }
   }
-  console.log("damage after bonus", dmg);
   return dmg;
 }
