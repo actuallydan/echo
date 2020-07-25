@@ -4,7 +4,7 @@ const classes = [
   { type: "sniper_rifle", damage: "1d12", range: 200 },
   { type: "shotgun", damage: "4d4", range: 20 },
   { type: "rocket_launcher", damage: "2d20", range: 60 },
-  { type: "submachine_gun", damage: "3d4", range: 40 }
+  { type: "submachine_gun", damage: "3d4", range: 40 },
 ];
 
 const brands = [
@@ -14,7 +14,7 @@ const brands = [
   "Maliwan",
   "Tediore",
   "Torgue",
-  "Vladof"
+  "Vladof",
 ];
 
 const elements = ["fire", "lightning", "cold", "force", "necrotic"];
@@ -28,7 +28,7 @@ export function generateGun(
   rarity = parseInt(rarity, 10);
 
   // class (rifle, pistol, shotgun etc)
-  const uniformSample = n => {
+  const uniformSample = (n) => {
     return (Math.random() * (n + 1) + (n - 1)) | 0;
   };
 
@@ -46,7 +46,7 @@ export function generateGun(
   gun.range = gun.range + uniformSample(rarity - 1) * 10;
 
   // attack roll bonus (+1 weapon etc.)
-  gun.rollBonus = rarity;
+  gun.rarity = rarity;
 
   // bonus damage
   gun.bonusDamage =
@@ -61,7 +61,7 @@ export function generateGun(
     gun.bonusDamage = uniformSample(rarity + 1) + gun.bonusDamage;
     gun.element =
       gun.element !== "Torgue"
-        ? elements[Math.floor(Math.random() * 7)]
+        ? elements[Math.floor(Math.random() * 5)]
         : "force";
   }
 
@@ -69,20 +69,22 @@ export function generateGun(
 }
 
 export function calculateDamage(gun) {
-  const roll = d => Math.floor(Math.random() * d) + 1;
-
+  const roll = (d) => Math.floor(Math.random() * d) + 1;
+  console.log({ gun });
   let dmg = 0;
   const [quantity, d] = gun.damage.split("d");
 
   for (let i = 0; i < quantity; i++) {
     dmg += roll(d);
   }
+  console.log("damage before bonus", dmg);
   if (gun.bonusDamage) {
     const [quantity2, d2] = gun.bonusDamage.split("d");
-
+    console.log("adding bonus die");
     for (let i = 0; i < quantity2; i++) {
       dmg += roll(d2);
     }
   }
+  console.log("damage after bonus", dmg);
   return dmg;
 }

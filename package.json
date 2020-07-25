@@ -4,6 +4,7 @@
   "homepage": "https://actuallydan.github.io/echo",
   "private": true,
   "dependencies": {
+    "@bit/davidhu2000.react-spinners.scale-loader": "^0.5.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",

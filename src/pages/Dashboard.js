@@ -1,28 +1,56 @@
 import React, { useGlobal } from "reactn";
-import Button from "../components/Button";
 import StatusBar from "../components/StatusBar";
 import HealDamage from "../components/HealDamage";
+
+import GunTableLabel from "../components/GunTableLabel";
+import GunDisplay from "../components/GunDisplay";
+import Fieldset from "../components/Fieldset";
 
 export default function Dashboard(props) {
   const [sp] = useGlobal("sp");
   const [hp] = useGlobal("hp");
+  const [guns] = useGlobal("guns");
+  const [theme] = useGlobal("theme");
   const [shieldRemaining, setShieldRemaining] = useGlobal("shieldRemaining");
   const [healthRemaining, setHealthRemaining] = useGlobal("healthRemaining");
 
-  console.log(sp, hp);
   const regen = (shouldRegenShield) => {
     shouldRegenShield ? setShieldRemaining(sp) : setHealthRemaining(hp);
   };
 
-  return (
-    <div>
-      {/* SP */}
-      <StatusBar blue total={sp} remaining={shieldRemaining} regen={regen} />
-      {/* HP */}
-      <StatusBar total={hp} remaining={healthRemaining} regen={regen} />
+  const fieldSetStyles = {
+    border: `1px solid ${theme}`,
+    padding: "1em",
+    marginBottom: "2em",
+  };
+  const legendStyles = {
+    color: theme,
+  };
 
-      {/* Damage/Heal */}
-      <HealDamage />
+  return (
+    <div id="dashboard">
+      <Fieldset
+        className="fieldsetSection"
+        style={fieldSetStyles}
+        label={"Health & Shields"}
+      >
+        {/* SP */}
+        <StatusBar blue total={sp} remaining={shieldRemaining} regen={regen} />
+        {/* HP */}
+        <StatusBar total={hp} remaining={healthRemaining} regen={regen} />
+
+        {/* Damage/Heal */}
+        <HealDamage />
+      </Fieldset>
+
+      <Fieldset
+        className="fieldsetSection"
+        style={fieldSetStyles}
+        label={"Guns"}
+      >
+        <GunTableLabel />
+        {guns && guns.map((gun) => <GunDisplay id={gun.id} gun={gun} />)}
+      </Fieldset>
     </div>
   );
 }

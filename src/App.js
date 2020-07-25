@@ -1,14 +1,13 @@
 import React, { useState, useGlobal, setGlobal, useEffect } from "reactn";
-import { generateGun, calculateDamage } from "./utils/generate";
 import Nav from "./components/Nav";
 
 import Config from "./pages/Config";
 import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
 import GunRange from "./pages/GunRange";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { defaultState } from "./utils/data";
+import ScaleLoader from "@bit/davidhu2000.react-spinners.scale-loader";
 
 import "./App.css";
 
@@ -48,16 +47,22 @@ function App() {
             <Route path="/config">
               <Config />
             </Route>
-            <Route path="/app">
-              <Dashboard />
-            </Route>
             <Route path="/guns">
               <GunRange />
+            </Route>
+            <Route>
+              <Dashboard />
             </Route>
           </Switch>
         </Router>
       ) : (
-        "Loading..."
+        <div className="column center" style={{ height: "100vh" }}>
+          <ScaleLoader
+            height={90}
+            width={10}
+            color={globalState.theme || "#6b5ce7"}
+          />
+        </div>
       )}
     </div>
   );

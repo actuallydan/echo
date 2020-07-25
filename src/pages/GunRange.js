@@ -2,6 +2,7 @@ import React, { useState, useGlobal } from "reactn";
 import Button from "../components/Button";
 
 import { generateGun, calculateDamage } from "../utils/generate";
+import GunTableLabel from "../components/GunTableLabel";
 import GunDisplay from "../components/GunDisplay";
 
 export default function Dashboard(props) {
@@ -56,6 +57,7 @@ export default function Dashboard(props) {
       <br />
       <br />
 
+      <GunTableLabel />
       {gun && (
         <div style={{ display: "flex", flexDirection: "column" }}>
           <GunDisplay gun={gun} />

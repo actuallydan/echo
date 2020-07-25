@@ -87,6 +87,9 @@ code {
   font-size: 1.25em;
 }
 
+.gunRow .column {
+  width: 25%;
+}
 /* Some flex stuff */
 
 .row {
@@ -120,19 +123,23 @@ code {
     -2px -1px 0 #000;
 }
 
+.gunTableLabel {
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
 /* Animations */
 @keyframes popOff {
   0% {
-    transform: translateX(1em) translateY(-1em);
+    transform: translateX(-1em) translateY(-1em);
     font-size: 1em;
   }
   10% {
-    transform: translateX(1em) translateY(-1em);
+    transform: translateX(-1em) translateY(-1em);
     font-size: 2em;
     color: #ffe500;
   }
   20% {
-    transform: translateX(2em) translateY(-1.5em);
+    transform: translateX(-2em) translateY(-1.5em);
     font-size: 4em;
     text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000,
       -1px -1px 0 #000, 0px 1px 0 #000, 0px -1px 0 #000, -1px 0px 0 #000,
@@ -144,20 +151,23 @@ code {
     color: #ffe500;
   }
   30% {
-    transform: translateX(3em) translateY(-1em);
+    transform: translateX(-3em) translateY(-1em);
     font-size: 2em;
     color: #ffe500;
   }
   60% {
-    transform: translateX(4em) translateY(50vh);
+    transform: translateX(-4em) translateY(50vh);
     font-size: 1.25em;
   }
   100% {
-    transform: translateX(4.5em) translateY(100vh);
+    transform: translateX(-4.5em) translateY(100vh);
     font-size: 1em;
   }
 }
 
 .popOff {
-  animation: popOff 1s 1 0s ease-out;
+  animation: popOff 0.5s 1 0s ease-out;
+}
+
+@media screen and (max-width: 768px) {
 }

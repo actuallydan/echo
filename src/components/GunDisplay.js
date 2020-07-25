@@ -1,21 +1,54 @@
-import React, { useGlobal } from "react";
+import React, { useGlobal, useState } from "react";
 import Button from "./Button";
+import { calculateDamage } from "../utils/generate";
 
 export default function GunDisplay({
-  gun: { type, brand, range, damage },
+  gun: { type, brand, range, damage, rarity, element, bonusDamage },
   ...props
 }) {
-  //   const [theme, setTheme] = useGlobal("theme");
+  // const [theme, setTheme] = useGlobal("theme");
+  const [damageInst, setDamageInst] = useState(null);
+  const [fire, setFire] = useState(0);
 
-  const bang = () => {};
+  const bang = () => {
+    const getDamage = calculateDamage({
+      type,
+      brand,
+      range,
+      damage,
+      rarity,
+      element,
+      bonusDamage,
+    });
 
-  const theme = "#FFF";
-  const labelStyles = {
-    color: theme,
+    setDamageInst(getDamage);
+    setFire(fire + 1);
   };
 
+  const colorsByRarity = ["#FFFFFF", "#00FF00", "#00DFFE", "#ffc107"];
+  const color = colorsByRarity[rarity - 1];
+  // console.log(rarity, color);
+
+  const labelStyles = {
+    color,
+  };
+
+  const elementMap = {
+    fire: "#FF5050",
+    lightning: "#0030FF",
+    cold: "#00dffe",
+    force: "yellow",
+    necrotic: "green",
+  };
+
+  const elementColor = element ? elementMap[element] : null;
+
+  const elementStyles = {
+    color: elementColor,
+    marginLeft: "0.5em",
+  };
   return (
-    <div className="row between gunRow">
+    <div className="row gunRow">
       <div className="column">
         <div style={labelStyles}>
           {type
@@ -31,14 +64,23 @@ export default function GunDisplay({
       <div className="column">
         <div style={labelStyles}>{range} ft</div>
       </div>
-
       <div className="column">
-        <Button
-          label={damage}
-          onClick={bang}
-          color={theme}
-          style={{ margin: 0 }}
-        />
+        <div className="row">
+          <Button
+            label={damage}
+            onClick={bang}
+            color={color}
+            style={{ margin: 0 }}
+          />
+          {element && <div style={elementStyles}>{bonusDamage}</div>}
+        </div>
+      </div>
+      <div className="column">
+        {damageInst && (
+          <div key={fire} className={"popOff"} style={labelStyles}>
+            {damageInst}
+          </div>
+        )}
       </div>
     </div>
   );

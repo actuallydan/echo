@@ -9,7 +9,6 @@ export default function Nav(props) {
   // navigate
   const navigate = (e) => {
     const dest = e.currentTarget.getAttribute("data-dest");
-    console.log(history, dest);
     history.push(dest);
   };
 
@@ -20,15 +19,15 @@ export default function Nav(props) {
   return (
     <div className="row around nav">
       <div className="column center">
-        <Activity data-dest={"/app"} onClick={navigate} color={theme} />
-        <div className="navLabel" style={textLabelStyles}>
-          Stats
-        </div>
-      </div>
-      <div className="column center">
         <Settings data-dest={"/config"} onClick={navigate} color={theme} />
         <div className="navLabel" style={textLabelStyles}>
           Settings
+        </div>
+      </div>
+      <div className="column center">
+        <Activity data-dest={"/"} onClick={navigate} color={theme} />
+        <div className="navLabel" style={textLabelStyles}>
+          Stats
         </div>
       </div>
       <div className="column center">
