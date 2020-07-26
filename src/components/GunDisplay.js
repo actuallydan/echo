@@ -1,17 +1,13 @@
-import React, { useGlobal, useState } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import { calculateDamage } from "../utils/generate";
 
 export default function GunDisplay({
   gun: { type, brand, range, damage, rarity, element, bonusDamage },
   hideDamage = false,
-  ...props
 }) {
-  // const [theme, setTheme] = useGlobal("theme");
   const [damageInst, setDamageInst] = useState(null);
   const [fire, setFire] = useState(0);
-
-  console.log({ type, brand, range, damage, rarity, element, bonusDamage });
 
   const bang = () => {
     const getDamage = calculateDamage({
@@ -30,7 +26,6 @@ export default function GunDisplay({
 
   const colorsByRarity = ["#FFFFFF", "#00FF00", "#00DFFE", "#ffc107"];
   const color = colorsByRarity[rarity - 1];
-  // console.log(rarity, color);
 
   const labelStyles = {
     color,
@@ -50,6 +45,7 @@ export default function GunDisplay({
     color: elementColor,
     marginLeft: "0.5em",
   };
+
   return (
     <div className="row gunRow">
       <div className="column">

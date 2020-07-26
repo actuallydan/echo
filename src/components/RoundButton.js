@@ -1,12 +1,6 @@
-import React, { useState, useGlobal, setGlobal, useEffect } from "reactn";
+import React, { useGlobal } from "reactn";
 
-export default function RoundButton({
-  active = false,
-  label,
-  data,
-  onClick,
-  ...props
-}) {
+export default function RoundButton({ active = false, label, data, onClick }) {
   const [theme] = useGlobal("theme");
 
   const btnStyles = {

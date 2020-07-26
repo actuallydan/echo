@@ -6,11 +6,10 @@ import GunTableLabel from "../components/GunTableLabel";
 import GunDisplay from "../components/GunDisplay";
 import Fieldset from "../components/Fieldset";
 
-export default function Dashboard(props) {
+export default function Dashboard() {
   const [sp] = useGlobal("sp");
   const [hp] = useGlobal("hp");
   const [guns] = useGlobal("guns");
-  const [theme] = useGlobal("theme");
   const [shieldRemaining, setShieldRemaining] = useGlobal("shieldRemaining");
   const [healthRemaining, setHealthRemaining] = useGlobal("healthRemaining");
 
@@ -20,15 +19,6 @@ export default function Dashboard(props) {
     shouldRegenShield ? setShieldRemaining(sp) : setHealthRemaining(hp);
   };
 
-  const fieldSetStyles = {
-    border: `1px solid ${theme}`,
-    padding: "1em",
-    marginBottom: "2em",
-  };
-  const legendStyles = {
-    color: theme,
-  };
-
   useEffect(() => {
     const backup = JSON.stringify(global);
     localStorage.setItem("BL_Backup", backup);
@@ -36,11 +26,7 @@ export default function Dashboard(props) {
 
   return (
     <div id="dashboard">
-      <Fieldset
-        className="fieldsetSection"
-        style={fieldSetStyles}
-        label={"Health & Shields"}
-      >
+      <Fieldset label={"Health & Shields"}>
         {/* SP */}
         <StatusBar blue total={sp} remaining={shieldRemaining} regen={regen} />
         {/* HP */}
@@ -50,13 +36,9 @@ export default function Dashboard(props) {
         <HealDamage />
       </Fieldset>
 
-      <Fieldset
-        className="fieldsetSection"
-        style={fieldSetStyles}
-        label={"Guns"}
-      >
+      <Fieldset label={"Guns"}>
         <GunTableLabel />
-        {guns && guns.map((gun) => <GunDisplay id={gun.id} gun={gun} />)}
+        {guns && guns.map((gun) => <GunDisplay key={gun.id} gun={gun} />)}
       </Fieldset>
     </div>
   );

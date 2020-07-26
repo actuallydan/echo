@@ -1,4 +1,4 @@
-import React, { useState, useGlobal } from "reactn";
+import React, { useState } from "reactn";
 import Button from "../components/Button";
 
 import { generateGun, calculateDamage } from "../utils/generate";

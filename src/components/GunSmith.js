@@ -1,9 +1,9 @@
-import React, { useState, useGlobal, setGlobal, useEffect } from "reactn";
+import React, { useState, useGlobal } from "reactn";
 import RoundButton from "./RoundButton";
 import { generateGun } from "../utils/generate";
 
 export default function GunSmith() {
-  const [theme, setTheme] = useGlobal("theme");
+  const [theme] = useGlobal("theme");
   const [activeType, setActiveType] = useState("pistol");
   const [activeRarity, setActiveRarity] = useState(0);
   const [guns, setGuns] = useGlobal("guns");
@@ -38,6 +38,7 @@ export default function GunSmith() {
 
   const addGun = () => {
     const newGun = generateGun(activeRarity + 1, activeType);
+    console.log({ guns, newGun });
     setGuns([...guns, newGun]);
   };
 

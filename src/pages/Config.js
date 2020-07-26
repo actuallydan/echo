@@ -111,7 +111,7 @@ export default function Config(props) {
         <GunSmith />
         <GunTableLabel hideDamage />
         {guns &&
-          guns.map((gun) => <GunDisplay hideDamage id={gun.id} gun={gun} />)}
+          guns.map((gun) => <GunDisplay hideDamage key={gun.id} gun={gun} />)}
       </Fieldset>
 
       <div className="section">
