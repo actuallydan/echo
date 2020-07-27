@@ -43,11 +43,13 @@ function App() {
         <Router>
           <Suspense
             fallback={
-              <ScaleLoader
-                height={90}
-                width={10}
-                color={globalState.theme || "#6b5ce7"}
-              />
+              <div className="column center" style={{ height: "100vh" }}>
+                <ScaleLoader
+                  height={90}
+                  width={10}
+                  color={globalState.theme || "#6b5ce7"}
+                />
+              </div>
             }
           >
             <Nav />
