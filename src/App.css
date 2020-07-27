@@ -26,7 +26,7 @@ code {
   text-transform: uppercase;
   justify-content: center;
   align-items: center;
-  min-width: 1em;
+  min-width: 2em;
 }
 
 .roundButton {
@@ -113,6 +113,19 @@ code {
   font-size: 1.25em;
 }
 
+.delete-gun {
+  margin-left: 1em;
+}
+
+.gunRowWrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5em;
+}
+.gunRow {
+  width: 100%;
+}
+
 .gunRow .column {
   width: 30%;
 }
@@ -152,6 +165,7 @@ code {
 .gunTableLabel {
   margin-bottom: 1em;
   padding-bottom: 0.5em;
+  margin-top: 1em;
 }
 /* Animations */
 @keyframes popOff {
@@ -196,9 +210,12 @@ code {
 }
 
 @media screen and (max-width: 800px) {
+  #root {
+    width: 100%;
+  }
 }
 @media screen and (min-width: 801px) {
-  .App {
+  #root {
     width: 800px;
   }
 }

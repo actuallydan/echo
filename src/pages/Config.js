@@ -3,6 +3,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { useHistory } from "react-router-dom";
 import { defaultState } from "../utils/data";
+import { X } from "react-feather";
 
 import Fieldset from "../components/Fieldset";
 import GunTableLabel from "../components/GunTableLabel";
@@ -18,7 +19,7 @@ export default function Config(props) {
 
   const [global] = useGlobal();
   const [theme, setTheme] = useGlobal("theme");
-  const [guns] = useGlobal("guns");
+  const [guns, setGuns] = useGlobal("guns");
 
   const [sp] = useGlobal("sp");
   const [hp] = useGlobal("hp");
@@ -73,6 +74,14 @@ export default function Config(props) {
     localStorage.removeItem("BL_Backup");
   };
 
+  const deleteItem = (e) => {
+    const id = e.currentTarget.getAttribute("data-id");
+
+    const newGunsList = guns.filter((g) => g.id !== id);
+
+    setGuns(newGunsList);
+  };
+
   return (
     <div>
       <div className="section row between">
@@ -100,9 +109,22 @@ export default function Config(props) {
       </Fieldset>
       <Fieldset label={"Manage Guns"}>
         <GunSmith />
-        <GunTableLabel hideDamage />
+        <div className="gunRowWrapper">
+          <GunTableLabel hideDamage />
+          <X className="delete-gun" color={"transparent"} />
+        </div>
         {guns &&
-          guns.map((gun) => <GunDisplay hideDamage key={gun.id} gun={gun} />)}
+          guns.map((gun) => (
+            <div key={gun.id} className="gunRowWrapper">
+              <GunDisplay hideDamage gun={gun} />
+              <X
+                className="delete-gun"
+                onClick={deleteItem}
+                color={theme}
+                data-id={gun.id}
+              />
+            </div>
+          ))}
       </Fieldset>
 
       <div className="section">
