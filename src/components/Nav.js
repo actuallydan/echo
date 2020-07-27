@@ -17,7 +17,7 @@ export default function Nav(props) {
   };
 
   return (
-    <div className="row around nav">
+    <div className="row between nav">
       <div className="column center">
         <Settings data-dest={"/config"} onClick={navigate} color={theme} />
         <div className="navLabel" style={textLabelStyles}>
