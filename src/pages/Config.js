@@ -14,28 +14,21 @@ export default function Config(props) {
     hp: 20,
     sp: 10,
   });
-  const [theme, setTheme] = useGlobal("theme");
-  const [global] = useGlobal();
-
   const [hasBeenUpdated, setHasBeenUpdated] = useState(false);
-  const history = useHistory();
+
+  const [global] = useGlobal();
+  const [theme, setTheme] = useGlobal("theme");
+  const [guns] = useGlobal("guns");
 
   const [sp] = useGlobal("sp");
   const [hp] = useGlobal("hp");
 
-  useEffect(() => {
-    //   if local data exists hydrate our store with it
-    if (localStorage && localStorage.getItem("BL_Backup")) {
-      const backup = JSON.parse(localStorage.getItem("BL_Backup"));
-      setGlobal({
-        ...backup,
-      });
-    }
-  }, []);
+  const history = useHistory();
 
   const updateGlobalStatus = () => {
     setGlobal({
-      ...global,
+      // guns,
+      theme,
       hp: state.hp,
       sp: state.sp,
       healthRemaining: state.hp,
@@ -79,8 +72,6 @@ export default function Config(props) {
     setGlobal(defaultState);
     localStorage.removeItem("BL_Backup");
   };
-
-  const guns = global.guns;
 
   return (
     <div>

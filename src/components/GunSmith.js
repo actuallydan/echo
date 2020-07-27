@@ -8,12 +8,10 @@ export default function GunSmith() {
   const [activeRarity, setActiveRarity] = useState(0);
   const [guns, setGuns] = useGlobal("guns");
 
-  const active = false;
-
   const btnStyles = {
     border: `2px solid ${theme}`,
-    color: active ? "#222222" : theme,
-    backgroundColor: active ? theme : "transparent",
+    color: theme,
+    backgroundColor: "transparent",
   };
 
   const types = [
@@ -37,8 +35,7 @@ export default function GunSmith() {
   };
 
   const addGun = () => {
-    const newGun = generateGun(activeRarity + 1, activeType);
-    console.log({ guns, newGun });
+    const newGun = generateGun(activeRarity + 1, activeType, null, null);
     setGuns([...guns, newGun]);
   };
 

@@ -19,38 +19,37 @@ const brands = [
 
 const elements = ["fire", "lightning", "cold", "force", "necrotic"];
 
+const uniformSample = (n) => {
+  return (Math.random() * (n + 1) + (n - 1)) | 0;
+};
+
 export function generateGun(
   rarity = 1,
   classType = null,
   brand = null,
-  element
+  element = null
 ) {
-  rarity = parseInt(rarity, 10);
-
-  // class (rifle, pistol, shotgun etc)
-  const uniformSample = (n) => {
-    return (Math.random() * (n + 1) + (n - 1)) | 0;
+  // initialize gun with base stats
+  const gun = {
+    ...(classes.find((c) => c.type === classType) ||
+      classes[Math.floor(Math.random() * 6)]),
+    id: uuid(),
+    rarity: parseInt(rarity, 10),
+    brand: brands[Math.floor(Math.random() * 7)],
+    range: 40 + uniformSample(rarity - 1) * 10,
+    bonusDamage: null,
+    element: null,
   };
 
-  let gun =
-    classes.find((c) => c.type === classType) ||
-    classes[Math.floor(Math.random() * 6)];
-
-  // brand
-  gun.brand = brand || brands[Math.floor(Math.random() * 7)];
-
-  // additional damage
+  // additional damage if any
   let [newDamageCount, dieType] = gun.damage.split("d");
   newDamageCount = parseInt(newDamageCount, 10) + rarity - 1;
   gun.damage = newDamageCount + "d" + dieType;
 
-  // range
+  // modify base range
   gun.range = gun.range + uniformSample(rarity - 1) * 10;
 
-  // attack roll bonus (+1 weapon etc.)
-  gun.rarity = rarity;
-
-  // bonus damage
+  // apply base bonus damage if any
   gun.bonusDamage =
     gun.brand === "Jakobs"
       ? null
@@ -61,7 +60,6 @@ export function generateGun(
   // number of bonus damage dice
   if (gun.bonusDamage) {
     gun.bonusDamage = uniformSample(rarity + 1) + gun.bonusDamage;
-
     // if element provided, use element
     gun.element = element
       ? element
@@ -69,9 +67,6 @@ export function generateGun(
       ? elements[Math.floor(Math.random() * 7)]
       : "force";
   }
-  // replace with some ientifiable hash e.g. rarity = 1, brand = Tediore === 1T...
-  gun.id = uuid();
-
   return gun;
 }
 
