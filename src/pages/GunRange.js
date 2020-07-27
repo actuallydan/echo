@@ -36,7 +36,7 @@ export default function Dashboard(props) {
 
     setAvgDmg(newAvg);
   };
-  console.log(gun);
+
   return (
     <>
       <p>Select a rarity:</p>
