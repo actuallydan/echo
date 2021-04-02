@@ -1,81 +1,70 @@
-import React, { useState } from "reactn";
-import Button from "../components/Button";
+import React, { useGlobal, useState } from "reactn";
 
-import { generateGun, calculateDamage } from "../utils/generate";
 import GunTableLabel from "../components/GunTableLabel";
 import GunDisplay from "../components/GunDisplay";
+import Fieldset from "../components/Fieldset";
+import GunSmith from "../components/GunSmith";
+import { X } from "react-feather";
 
 export default function Dashboard(props) {
-  const [gun, setGun] = useState(null);
-  const [rarity, setRarity] = useState(1);
-  const [damage, setDamage] = useState(null);
-  const [avgDmg, setAvgDmg] = useState({
-    pistol: [],
-    assault_rifle: [],
-    sniper_rifle: [],
-    shotgun: [],
-    rocket_launcher: [],
-    submachine_gun: [],
-  });
+  const [myGuns] = useGlobal('guns');
+  const [dex] = useGlobal('dex');
+  const [prof] = useGlobal('prof');
 
-  const createRandomGun = () => {
-    setGun(generateGun(rarity));
-  };
+  const hitBonus = dex + prof;
 
-  const updateRarity = (event) => {
-    setRarity(event.target.value);
-  };
+  myGuns.forEach((g, i) => {
+    myGuns[i] = { ...g, mine: true }
+  })
 
-  const shoot = () => {
-    const getDamage = calculateDamage(gun);
-    setDamage(getDamage);
-    const newAvg = {
-      ...avgDmg,
-      [gun.type]: [...avgDmg[gun.type], getDamage],
-    };
+  const [guns, setGuns] = useState(myGuns || []);
+  const [theme] = useGlobal("theme");
 
-    setAvgDmg(newAvg);
+  // const [damage, setDamage] = useState(null);
+  // const [avgDmg, setAvgDmg] = useState({
+  //   pistol: [],
+  //   assault_rifle: [],
+  //   sniper_rifle: [],
+  //   shotgun: [],
+  //   rocket_launcher: [],
+  //   submachine_gun: [],
+  // });
+
+  const onNewGun = (newGun) => {
+    setGuns([...guns, newGun]);
+  }
+
+  const deleteItem = (e) => {
+    const id = e.currentTarget.getAttribute("data-id");
+
+    const newGunsList = guns.filter((g) => g.id !== id);
+
+    setGuns(newGunsList);
   };
 
   return (
     <>
-      <p>Select a rarity:</p>
-      <div
-        onChange={updateRarity}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        {["Common", "Rare", "Epic", "Legendary"].map((r, i) => (
-          <div style={{ display: "flex", flexDirection: "row" }} key={r}>
-            <input type="radio" name="radio" value={i + 1} />
-            <div>{r}</div>
-          </div>
-        ))}
-      </div>
-      <br />
-
-      <Button onClick={createRandomGun} label={"Random Gun"} />
-      <br />
-      <br />
-
-      <GunTableLabel />
-      {gun && (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <GunDisplay gun={gun} />
-
-          <div>{"Brand : " + gun.brand}</div>
-          <div>{"Type:   " + gun.type}</div>
-          <div>{"Range:  " + gun.range + "ft"}</div>
-          <div>{"Damage: " + gun.damage}</div>
-          {gun.bonusDamage && (
-            <div>{"Element: " + gun.bonusDamage + " " + gun.element}</div>
-          )}
+      <Fieldset label={"Buncha Guns Over Here"}>
+        <GunSmith onNewGun={onNewGun} />
+        <div className="gunRowWrapper">
+          <GunTableLabel />
+          <X className="delete-gun" color={"transparent"} />
         </div>
-      )}
-      <br />
-      {gun && <button onClick={shoot}>BANG!</button>}
-      <br />
+        {guns &&
+          guns.map((gun) => (
+            <div key={gun.id} className="gunRowWrapper">
+              <GunDisplay gun={gun} hitBonus={hitBonus} />
+              <X
+                className="delete-gun"
+                onClick={gun.mine ? () => { } : deleteItem}
+                color={gun.mine ? "transparent" : theme}
+                data-id={gun.id}
+              />
+            </div>
+          ))}
+      </Fieldset>
 
-      {damage ? (
+      {/* {damage ? (
         <div key={Math.random()} className={"popOff"}>
           {damage}
         </div>
@@ -87,46 +76,46 @@ export default function Dashboard(props) {
           <div>
             {"pistol:  " +
               avgDmg["pistol"].reduce((d, agg) => (agg += d)) /
-                avgDmg["pistol"].length}
+              avgDmg["pistol"].length}
           </div>
         ) : null}
         {avgDmg["assault_rifle"].length ? (
           <div>
             {"assault_rifle: " +
               avgDmg["assault_rifle"].reduce((d, agg) => (agg += d)) /
-                avgDmg["assault_rifle"].length}
+              avgDmg["assault_rifle"].length}
           </div>
         ) : null}
         {avgDmg["sniper_rifle"].length ? (
           <div>
             {"sniper_rifle:  " +
               avgDmg["sniper_rifle"].reduce((d, agg) => (agg += d)) /
-                avgDmg["sniper_rifle"].length}
+              avgDmg["sniper_rifle"].length}
           </div>
         ) : null}
         {avgDmg["shotgun"].length ? (
           <div>
             {"shotgun: " +
               avgDmg["shotgun"].reduce((d, agg) => (agg += d)) /
-                avgDmg["shotgun"].length}
+              avgDmg["shotgun"].length}
           </div>
         ) : null}
         {avgDmg["rocket_launcher"].length ? (
           <div>
             {"rocket_launcher: " +
               avgDmg["rocket_launcher"].reduce((d, agg) => (agg += d)) /
-                avgDmg["rocket_launcher"].length}
+              avgDmg["rocket_launcher"].length}
           </div>
         ) : null}
         {avgDmg["submachine_gun"].length ? (
           <div>
             {"submachine_gun: " +
               avgDmg["submachine_gun"].reduce((d, agg) => (agg += d)) /
-                avgDmg["submachine_gun"].length}
+              avgDmg["submachine_gun"].length}
           </div>
         ) : null}
-      </div>
-      <Button onClick={shoot} label={"Button"} />
+      </div> */}
+      {/* <Button onClick={shoot} label={"Button"} /> */}
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useGlobal } from "reactn";
 
 export default function Input({
-  value = 0,
+  value = null,
   color,
   onChange,
   style = {},
@@ -21,7 +21,6 @@ export default function Input({
   return (
     <input
       className="input"
-      type="number"
       onChange={onChange}
       style={styles}
       value={value}

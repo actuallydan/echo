@@ -1,6 +1,6 @@
 import React, { useGlobal } from "reactn";
 
-export default function Button({ label = "Button", onClick, color, ...props }) {
+export default function Button({ label = "Button", onClick, color, className = "", ...props }) {
   const [theme] = useGlobal("theme");
 
   const btnColor = color || theme || "#00DFFE";
@@ -12,7 +12,7 @@ export default function Button({ label = "Button", onClick, color, ...props }) {
   };
 
   return (
-    <div {...props} onClick={onClick} className="button" style={styles}>
+    <div {...props} onClick={onClick} className={`button ${className}`} style={styles}>
       {label}
     </div>
   );

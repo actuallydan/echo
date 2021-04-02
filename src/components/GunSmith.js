@@ -2,11 +2,11 @@ import React, { useState, useGlobal } from "reactn";
 import RoundButton from "./RoundButton";
 import { generateGun } from "../utils/generate";
 
-export default function GunSmith() {
+export default function GunSmith({ onNewGun }) {
   const [theme] = useGlobal("theme");
   const [activeType, setActiveType] = useState("pistol");
   const [activeRarity, setActiveRarity] = useState(0);
-  const [guns, setGuns] = useGlobal("guns");
+  // const [guns, setGuns] = useGlobal("guns");
 
   const btnStyles = {
     border: `2px solid ${theme}`,
@@ -36,7 +36,8 @@ export default function GunSmith() {
 
   const addGun = () => {
     const newGun = generateGun(activeRarity + 1, activeType, null, null);
-    setGuns([...guns, newGun]);
+    // setGuns([...guns, newGun]);
+    onNewGun(newGun)
   };
 
   return (

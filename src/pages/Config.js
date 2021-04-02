@@ -11,10 +11,13 @@ import GunDisplay from "../components/GunDisplay";
 import GunSmith from "../components/GunSmith";
 
 export default function Config(props) {
-  const [state, setState] = useState({
+  const [state, setState] = useState(JSON.parse(localStorage.getItem('BL_Backup')) || {
     hp: 20,
     sp: 10,
+    dex: 0,
+    prof: 0
   });
+
   const [hasBeenUpdated, setHasBeenUpdated] = useState(false);
 
   const [global] = useGlobal();
@@ -23,6 +26,8 @@ export default function Config(props) {
 
   const [sp] = useGlobal("sp");
   const [hp] = useGlobal("hp");
+  const [dex] = useGlobal('dex');
+  const [prof] = useGlobal('prof');
 
   const history = useHistory();
 
@@ -32,6 +37,8 @@ export default function Config(props) {
       theme,
       hp: state.hp,
       sp: state.sp,
+      dex: state.dex,
+      prof: state.prof,
       healthRemaining: state.hp,
       shieldRemaining: state.sp,
     });
@@ -43,7 +50,7 @@ export default function Config(props) {
   useEffect(() => {
     const backup = JSON.stringify(global);
     localStorage.setItem("BL_Backup", backup);
-  }, [hp, sp]);
+  }, [hp, sp, prof, dex]);
 
   // navigate to app after update
   useEffect(() => {
@@ -53,9 +60,8 @@ export default function Config(props) {
   }, [hasBeenUpdated]);
 
   const updateValue = (e) => {
-    const newState = { ...state };
+    const newState = state;
     newState[e.currentTarget.name] = parseInt(e.currentTarget.value, 10);
-
     setState({ ...newState });
   };
 
@@ -82,6 +88,9 @@ export default function Config(props) {
     setGuns(newGunsList);
   };
 
+  const onNewGun = (newGun) => {
+    setGuns([...guns, newGun]);
+  }
   return (
     <div>
       <div className="section row between">
@@ -92,6 +101,14 @@ export default function Config(props) {
         <div className="column center">
           <Input onChange={updateValue} value={state.sp} name="sp" />
           <div style={labeStyles}>Shield Power</div>
+        </div>
+        <div className="column center">
+          <Input onChange={updateValue} value={state.dex} name="dex" />
+          <div style={labeStyles}>Dexterity</div>
+        </div>
+        <div className="column center">
+          <Input onChange={updateValue} value={state.prof} name="prof" />
+          <div style={labeStyles}>Proficiency</div>
         </div>
       </div>
       <Fieldset label={"Color Theme"}>
@@ -108,15 +125,15 @@ export default function Config(props) {
         />
       </Fieldset>
       <Fieldset label={"Manage Guns"}>
-        <GunSmith />
+        <GunSmith onNewGun={onNewGun} />
         <div className="gunRowWrapper">
-          <GunTableLabel hideDamage />
+          <GunTableLabel hideDamage hideAttack />
           <X className="delete-gun" color={"transparent"} />
         </div>
         {guns &&
           guns.map((gun) => (
             <div key={gun.id} className="gunRowWrapper">
-              <GunDisplay hideDamage gun={gun} />
+              <GunDisplay hideDamage hideAttack gun={gun} />
               <X
                 className="delete-gun"
                 onClick={deleteItem}

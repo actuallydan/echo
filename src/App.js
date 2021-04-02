@@ -3,8 +3,6 @@ import React, {
   useGlobal,
   setGlobal,
   useEffect,
-  lazy,
-  Suspense,
 } from "reactn";
 
 import Nav from "./components/Nav";
@@ -15,9 +13,9 @@ import ScaleLoader from "@bit/davidhu2000.react-spinners.scale-loader";
 
 import "./App.css";
 
-const Config = lazy(() => import("./pages/Config"));
-const Dashboard = lazy(() => import("./pages/Dashboard"));
-const GunRange = lazy(() => import("./pages/GunRange"));
+import Config from "./pages/Config"
+import Dashboard from "./pages/Dashboard"
+import GunRange from "./pages/GunRange"
 
 // initialize with default data
 setGlobal(defaultState);
@@ -41,30 +39,18 @@ function App() {
     <div className="App">
       {hasLoaded ? (
         <Router>
-          <Suspense
-            fallback={
-              <div className="column center" style={{ height: "100vh" }}>
-                <ScaleLoader
-                  height={90}
-                  width={10}
-                  color={globalState.theme || "#6b5ce7"}
-                />
-              </div>
-            }
-          >
-            <Nav />
-            <Switch>
-              <Route path="/config">
-                <Config />
-              </Route>
-              <Route path="/guns">
-                <GunRange />
-              </Route>
-              <Route>
-                <Dashboard />
-              </Route>
-            </Switch>
-          </Suspense>
+          <Nav />
+          <Switch>
+            <Route path="/config">
+              <Config />
+            </Route>
+            <Route path="/guns">
+              <GunRange />
+            </Route>
+            <Route path="/">
+              <Dashboard />
+            </Route>
+          </Switch>
         </Router>
       ) : (
         <div className="column center" style={{ height: "100vh" }}>
