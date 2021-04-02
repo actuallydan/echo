@@ -2,7 +2,7 @@ const classes = [
   { type: "pistol", damage: "2d6", range: 40 },
   { type: "assault_rifle", damage: "2d10", range: 60 },
   { type: "sniper_rifle", damage: "1d12", range: 200 },
-  { type: "shotgun", damage: "4d4", range: 20 },
+  { type: "shotgun", damage: "4d4", range: 15 },
   { type: "rocket_launcher", damage: "2d20", range: 60 },
   { type: "submachine_gun", damage: "3d4", range: 40 },
 ];
@@ -36,7 +36,6 @@ export function generateGun(
     id: uuid(),
     rarity: parseInt(rarity, 10),
     brand: brands[Math.floor(Math.random() * 7)],
-    range: 40 + uniformSample(rarity - 1) * 10,
     bonusDamage: null,
     element: null,
   };
@@ -54,8 +53,8 @@ export function generateGun(
     gun.brand === "Jakobs"
       ? null
       : Math.random() > 0.8 || gun.brand === "Maliwan"
-      ? "d6"
-      : null;
+        ? "d6"
+        : null;
 
   // number of bonus damage dice
   if (gun.bonusDamage) {
@@ -64,8 +63,8 @@ export function generateGun(
     gun.element = element
       ? element
       : gun.element !== "Torgue"
-      ? elements[Math.floor(Math.random() * 7)]
-      : "force";
+        ? elements[Math.floor(Math.random() * 7)]
+        : "force";
   }
   return gun;
 }
